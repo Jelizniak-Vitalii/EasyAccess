@@ -3,6 +3,7 @@ package com.easyaccess.app.common.providers;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,21 @@ public class JwtTokenProvider {
     return Keys.hmacShaKeyFor(jwtSecret.getBytes());
   }
 
-  public String generateToken(String email) {
+  private Claims getClaims(String token) {
+    return Jwts.parser()
+      .verifyWith(getSecretKey())
+      .build()
+      .parseSignedClaims(token)
+      .getPayload();
+  }
+
+  public String generateToken(String email, String role, Long userId) {
     return Jwts.builder()
       .subject(email)
       .issuedAt(new Date())
       .expiration(new Date(System.currentTimeMillis() + Long.parseLong(jwtExpiration)))
-//      .claim("userId", userId)
-//      .claim("role", role)
+      .claim("userId", userId)
+      .claim("role", role)
       .signWith(getSecretKey())
       .compact();
   }
@@ -45,13 +54,21 @@ public class JwtTokenProvider {
     }
   }
 
-  public String extractUsername(String token) {
-    Claims claims = Jwts.parser()
-      .verifyWith(getSecretKey())
-      .build()
-      .parseSignedClaims(token)
-      .getPayload();
+  public String extractRole(String token) {
+    return getClaims(token).get("role", String.class);
+  }
 
-    return claims.getSubject();
+  public Long extractUserId(String token) {
+    return getClaims(token).get("userId", Long.class);
+  }
+
+  public String resolveToken(HttpServletRequest request) {
+    String bearerToken = request.getHeader("Authorization");
+
+    if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+      return bearerToken.substring(7);
+    }
+
+    return null;
   }
 }

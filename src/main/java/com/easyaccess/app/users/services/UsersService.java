@@ -5,6 +5,7 @@ import com.easyaccess.app.users.models.UserModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersService {
@@ -15,7 +16,8 @@ public class UsersService {
   }
 
   public List<UserModel> getAllUsers() {
-    return userDao.findAll();
+    return userDao.findAll().stream().peek(user -> user.setPassword(null))
+      .collect(Collectors.toList());
   }
 
   public UserModel getUserById(Long id) {

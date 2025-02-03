@@ -1,13 +1,13 @@
 package com.easyaccess.app.users.controllers;
 
-import com.easyaccess.app.users.dto.CreateUserDto;
+import com.easyaccess.app.auth.guards.AuthGuard;
 import com.easyaccess.app.users.models.UserModel;
 import com.easyaccess.app.users.services.UsersService;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AuthGuard
 @RestController
 @RequestMapping("/users")
 public class UsersController {

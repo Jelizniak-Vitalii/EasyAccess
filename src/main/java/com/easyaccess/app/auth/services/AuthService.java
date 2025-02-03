@@ -32,7 +32,7 @@ public class AuthService {
       throw new IllegalStateException("Email or password is incorrect");
     }
 
-    return jwtTokenProvider.generateToken(email);
+    return jwtTokenProvider.generateToken(email, "Admin", user.getId());
   }
 
   @Transactional
@@ -51,6 +51,6 @@ public class AuthService {
 
     usersService.createUser(candidate);
 
-    return jwtTokenProvider.generateToken(registrationDto.getEmail());
+    return jwtTokenProvider.generateToken(registrationDto.getEmail(), "Admin", candidate.getId());
   }
 }
