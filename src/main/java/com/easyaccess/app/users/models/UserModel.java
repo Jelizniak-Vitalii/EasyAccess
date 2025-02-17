@@ -1,19 +1,20 @@
 package com.easyaccess.app.users.models;
 
 public class UserModel {
-  private Long id;
+  private int id;
   private String email;
   private String password;
   private String firstName;
   private String phone;
   private String lastName;
   private String image;
+  private String lang;
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -65,6 +66,14 @@ public class UserModel {
     this.image = image;
   }
 
+  public String getLang() {
+    return lang;
+  }
+
+  public void setLang(String lang) {
+    this.lang = lang;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -75,6 +84,7 @@ public class UserModel {
       ", firstName='" + firstName + '\'' +
       ", lastName='" + lastName + '\'' +
       ", image='" + image + '\'' +
+      ", lang='" + lang + '\'' +
       '}';
   }
 }

@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50),
     phone VARCHAR(20),
-    image VARCHAR(255)
+    image VARCHAR(255),
+    lang VARCHAR(10) DEFAULT 'ru' NOT NULL
 );

@@ -1,4 +1,4 @@
-package com.easyaccess.app.common.configs;
+package com.easyaccess.app.common.configs.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -33,11 +33,21 @@ public class UserDao {
     return users.isEmpty() ? null : users.get(0);
   }
 
-  public void createUser(UserModel user) {
+  public int createUser(UserModel user) {
     String sql = "INSERT INTO users (email, password, phone, first_name, last_name) VALUES (?, ?, ?, ?, ?)";
 
-    jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getPhone(),
+    return jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getPhone(),
       user.getFirstName(), user.getLastName());
+  }
+
+  public void updateLang(Long userId, String lang) {
+    String sql = "UPDATE users SET lang = ? WHERE id = ?";
+    jdbcTemplate.update(sql, lang, userId);
+  }
+
+  public void updateUserImage(Long userId, String filePath) {
+    String sql = "UPDATE users SET image = ? WHERE id = ?";
+    jdbcTemplate.update(sql, filePath, userId);
   }
 
   public void update(UserModel user) {

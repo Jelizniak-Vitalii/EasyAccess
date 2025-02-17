@@ -49,8 +49,8 @@ public class AuthService {
     candidate.setFirstName(registrationDto.getFirstName());
     candidate.setLastName(registrationDto.getLastName());
 
-    usersService.createUser(candidate);
+    int userId = usersService.createUser(candidate);
 
-    return jwtTokenProvider.generateToken(registrationDto.getEmail(), "Admin", candidate.getId());
+    return jwtTokenProvider.generateToken(registrationDto.getEmail(), "Admin", userId);
   }
 }

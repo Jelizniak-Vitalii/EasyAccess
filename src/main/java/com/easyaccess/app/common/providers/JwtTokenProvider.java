@@ -30,7 +30,7 @@ public class JwtTokenProvider {
       .getPayload();
   }
 
-  public String generateToken(String email, String role, Long userId) {
+  public String generateToken(String email, String role, int userId) {
     return Jwts.builder()
       .subject(email)
       .issuedAt(new Date())

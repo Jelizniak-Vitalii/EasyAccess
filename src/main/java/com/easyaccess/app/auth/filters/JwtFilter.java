@@ -25,7 +25,9 @@ public class JwtFilter implements Filter {
 
     if (token != null && jwtTokenProvider.validateToken(token)) {
       String role = jwtTokenProvider.extractRole(token);
+      Long userId = jwtTokenProvider.extractUserId(token);
       httpRequest.setAttribute("role", role);
+      httpRequest.setAttribute("userId", userId);
     }
 
     chain.doFilter(request, response);

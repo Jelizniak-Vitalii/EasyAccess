@@ -13,21 +13,26 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRATION=${JWT_EXPIRATION}
+    env_file:
+      - .env
+    volumes:
+      - uploads:${FILES_PATH}
     depends_on:
       - db
 
   db:
-    image: postgres:15
+    image: postgres:14
     container_name: easyaccess_db
     restart: always
     ports:
       - "5433:5432"
     environment:
-      - POSTGRES_DB=easyaccess
+      - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:${DB_PATH}
 
 volumes:
   postgres_data:
+  uploads:

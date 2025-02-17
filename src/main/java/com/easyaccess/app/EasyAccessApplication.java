@@ -1,5 +1,6 @@
 package com.easyaccess.app;
 
+import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
@@ -42,5 +43,13 @@ public class EasyAccessApplication implements WebApplicationInitializer {
     ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
     dispatcher.setLoadOnStartup(1);
     dispatcher.addMapping("/");
+
+    MultipartConfigElement multipartConfigElement = new MultipartConfigElement(
+      "",
+      10485760L,
+      10485760L,
+      1048576
+    );
+    dispatcher.setMultipartConfig(multipartConfigElement);
   }
 }
